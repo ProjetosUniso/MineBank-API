@@ -19,50 +19,50 @@ public class ClienteController {
     private ClienteService _cs;
 
     @PostMapping
-    public ResponseEntity<Cliente> adicionar(@Valid @RequestBody Cliente cliente) {
+    public ResponseEntity adicionar(@Valid @RequestBody Cliente cliente) {
 
         try {
             _cs.adicionarNovoCliente(cliente);
 
-            return new ResponseEntity<>(cliente, HttpStatus.OK);
+            return new ResponseEntity(HttpStatus.OK);
         }
         catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping
-    public ResponseEntity<List<Cliente>> listar() {
+    public ResponseEntity listar() {
 
-        try {
-            List<Cliente> listaClientes = _cs.listarClientes();
+        List<Cliente> listaClientes = _cs.listarClientes();
 
-            return new ResponseEntity<>(listaClientes, HttpStatus.OK);
-        }
-        catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+        if (!listaClientes.isEmpty())
+            return new ResponseEntity(listaClientes, HttpStatus.FOUND);
+        else
+            return new ResponseEntity("não existem clientes", HttpStatus.NOT_FOUND);
+
     }
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<Cliente> buscarPorId(@Valid @PathVariable(value = "id") Long id) {
+    public ResponseEntity buscarPorId(@Valid @PathVariable(value = "id") Long id) {
+
         Optional<Cliente> cliente = _cs.obterPorId(id);
 
         if(cliente.isPresent())
-            return ResponseEntity.ok(cliente.get());
+            return new ResponseEntity(cliente.get(), HttpStatus.FOUND);
         else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Cliente não encontrado", HttpStatus.NOT_FOUND);
 
     }
 
     @GetMapping("/cpf/{cpf}")
-    public ResponseEntity<Cliente> buscarPorCpf(@Valid @PathVariable(value = "cpf") String cpf) {
+    public ResponseEntity buscarPorCpf(@Valid @PathVariable(value = "cpf") String cpf) {
         Optional<Cliente> cliente = _cs.obterPorCpf(cpf);
 
         if(cliente.isPresent())
-            return ResponseEntity.ok(cliente.get());
+            return new ResponseEntity(cliente.get(), HttpStatus.FOUND);
         else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Cliente não encontrado", HttpStatus.NOT_FOUND);
 
     }
 }

@@ -1,40 +1,51 @@
 package br.projetosuniso.minebank.api.Model;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
 public class Cliente {
 
     private Long id;
 
-    @NotNull(message = "O valor nome não pode ser nulo")
-    @NotBlank(message = "O valor nome não pode ser vazio")
+    @NotNull
+    @NotBlank
     private String nome;
 
-
+    @NotNull
+    @NotBlank
     private String cpf;
 
+    @NotNull
+    @NotBlank
     private String rg;
 
+    @NotNull
+    @NotBlank
     private String email;
+
+    @DateTimeFormat
+    private Date dataNascimento;
 
     public Cliente() {
 
     }
 
-    public Cliente(Long id, String nome, String cpf, String rg, String email)
+    public Cliente(Long id, String nome, String cpf, String rg, String email, Date dataNascimento)
     {
         setId(id);
         setNome(nome);
         setCpf(cpf);
         setRg(rg);
         setEmail(email);
+        setDataNascimento(dataNascimento);
     }
 
     public void setId(Long id) {
@@ -78,5 +89,13 @@ public class Cliente {
 
     public void setRg(String rg) {
         this.rg = rg;
+    }
+
+    public Date getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 }
