@@ -29,4 +29,19 @@ public class ClienteService {
     public Optional<Cliente> obterPorId(Long id) {
         return _cr.findById(id);
     }
+
+    public void atualizarCliente(Cliente clienteAtual, Cliente novoCliente) {
+
+        clienteAtual.setNome(novoCliente.getNome());
+        clienteAtual.setCpf(novoCliente.getCpf());
+        clienteAtual.setRg(novoCliente.getRg());
+        clienteAtual.setEmail(novoCliente.getEmail());
+        clienteAtual.setDataNascimento(novoCliente.getDataNascimento());
+
+        _cr.save(clienteAtual);
+    }
+
+    public void deletarCliente(Cliente cliente) {
+        _cr.delete(cliente);
+    }
 }

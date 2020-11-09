@@ -65,4 +65,33 @@ public class ClienteController {
             return new ResponseEntity("Cliente não encontrado", HttpStatus.NOT_FOUND);
 
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity atualizar(@Valid @PathVariable(value = "id") Long id, @Valid @RequestBody Cliente novoCliente) {
+
+        Optional<Cliente> oldCliente = _cs.obterPorId(id);
+
+        if (oldCliente.isPresent()) {
+            Cliente cliente = oldCliente.get();
+
+            _cs.atualizarCliente(cliente, novoCliente);
+
+            return new ResponseEntity(HttpStatus.OK);
+        }
+
+        return new ResponseEntity("Cliente não encontrado", HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deletar(@Valid @PathVariable(value = "id") Long id) {
+        Optional<Cliente> cliente = _cs.obterPorId(id);
+
+        if (cliente.isPresent()) {
+            _cs.deletarCliente(cliente.get());
+
+            return new ResponseEntity(HttpStatus.OK);
+        }
+
+        return new ResponseEntity("Cliente não encontrado", HttpStatus.NOT_FOUND);
+    }
 }
