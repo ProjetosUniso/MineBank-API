@@ -1,18 +1,21 @@
 package br.projetosuniso.minebank.api.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
-public class Cliente {
+public class Cliente{
 
+    @Id
+    @GeneratedValue(generator = "increment")
+    @GenericGenerator(name = "increment", strategy = "increment")
     private Long id;
 
     @NotNull
@@ -21,10 +24,12 @@ public class Cliente {
 
     @NotNull
     @NotBlank
+    @Size(min = 11, max = 11)
     private String cpf;
 
     @NotNull
     @NotBlank
+    @Size(min = 9, max = 9)
     private String rg;
 
     @NotNull
@@ -34,27 +39,29 @@ public class Cliente {
     @DateTimeFormat
     private Date dataNascimento;
 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "idEndereco", referencedColumnName = "id")
+    private Endereco endereco;
+
     public Cliente() {
 
     }
 
-    public Cliente(Long id, String nome, String cpf, String rg, String email, Date dataNascimento)
-    {
+    public Cliente(Long id, String nome, String cpf, String rg, String email, Date dataNascimento, Endereco endereco) {
         setId(id);
         setNome(nome);
         setCpf(cpf);
         setRg(rg);
         setEmail(email);
         setDataNascimento(dataNascimento);
+        setEndereco(endereco);
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name = "increment", strategy = "increment")
     public Long getId() {
         return id;
     }
@@ -98,4 +105,14 @@ public class Cliente {
     public void setDataNascimento(Date dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
 }
+

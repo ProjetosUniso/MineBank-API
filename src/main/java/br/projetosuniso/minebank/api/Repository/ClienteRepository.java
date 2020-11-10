@@ -12,6 +12,6 @@ import java.util.Optional;
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
     /*Metodo da interface que faz o select no banco retornando um tipo de Cliente*/
-    @Query(value = "select new br.projetosuniso.minebank.api.Model.Cliente(c.id, c.nome, c.cpf, c.rg, c.email, c.dataNascimento) from Cliente c where c.cpf = :cpf")
+    @Query(value = "select new br.projetosuniso.minebank.api.Model.Cliente(c.id, c.nome, c.cpf, c.rg, c.email, c.dataNascimento) from Cliente c where c.cpf = :cpf order by c.id")
     Optional<Cliente> findByCpf(@Param("cpf") String cpf);
 }

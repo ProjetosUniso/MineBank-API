@@ -1,7 +1,9 @@
 package br.projetosuniso.minebank.api.Controller;
 
 import br.projetosuniso.minebank.api.Model.Cliente;
+import br.projetosuniso.minebank.api.Model.Endereco;
 import br.projetosuniso.minebank.api.Service.ClienteService;
+import br.projetosuniso.minebank.api.Service.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +19,16 @@ public class ClienteController {
 
     @Autowired
     private ClienteService _cs;
+    @Autowired
+    private EnderecoService _es;
 
     @PostMapping
     public ResponseEntity adicionar(@Valid @RequestBody Cliente cliente) {
 
         try {
+            Endereco endereco = cliente.getEndereco();
+
+            _es.adicionarEndereco(endereco);
             _cs.adicionarNovoCliente(cliente);
 
             return new ResponseEntity(HttpStatus.OK);
@@ -94,4 +101,5 @@ public class ClienteController {
 
         return new ResponseEntity("Cliente não encontrado", HttpStatus.NOT_FOUND);
     }
+
 }
