@@ -94,7 +94,10 @@ public class ClienteController {
         Optional<Cliente> cliente = _cs.obterPorId(id);
 
         if (cliente.isPresent()) {
+            Endereco endereco = cliente.get().getEndereco();
+
             _cs.deletarCliente(cliente.get());
+            _es.deletarEndereco(endereco);
 
             return new ResponseEntity(HttpStatus.OK);
         }

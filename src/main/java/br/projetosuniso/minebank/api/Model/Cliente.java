@@ -20,21 +20,17 @@ public class Cliente{
     private Long id;
 
     @NotNull
-    @NotBlank
     private String nome;
 
     @NotNull
-    @NotBlank
     @Size(min = 11, max = 11)
     private String cpf;
 
     @NotNull
-    @NotBlank
     @Size(min = 9, max = 9)
     private String rg;
 
     @NotNull
-    @NotBlank
     private String email;
 
     @DateTimeFormat

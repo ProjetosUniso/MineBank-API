@@ -17,19 +17,6 @@ public class EnderecoController {
     @Autowired
     private EnderecoService _es;
 
-    @PostMapping
-    public ResponseEntity adicionar(@Valid @RequestBody Endereco endereco) {
-
-        try {
-            _es.adicionarEndereco(endereco);
-
-            return new ResponseEntity(HttpStatus.OK);
-        }
-        catch (Exception e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
-        }
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity buscarPorId(@Valid @PathVariable(value = "id") Long id) {
 
@@ -40,5 +27,21 @@ public class EnderecoController {
         else
             return new ResponseEntity("Endereço não encontrado", HttpStatus.NOT_FOUND);
 
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity atualizar(@Valid @PathVariable(value = "id") Long id, @Valid @RequestBody Endereco novoEndereco) {
+
+        Optional<Endereco> oldEndereco = _es.obterPorId(id);
+
+        if (oldEndereco.isPresent()) {
+            Endereco endereco = oldEndereco.get();
+
+            _es.atualizarEndereco(endereco, novoEndereco);
+
+            return new ResponseEntity(HttpStatus.OK);
+        }
+
+        return new ResponseEntity("Enderço não encontrado", HttpStatus.NOT_FOUND);
     }
 }

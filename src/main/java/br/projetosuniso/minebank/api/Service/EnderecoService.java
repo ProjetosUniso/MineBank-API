@@ -20,4 +20,18 @@ public class EnderecoService {
     public Optional<Endereco> obterPorId(Long id) {
         return _er.findById(id);
     }
+
+    public void atualizarEndereco(Endereco enderecoAtual, Endereco novoEndereco) {
+
+        enderecoAtual.setRua(novoEndereco.getRua());
+        enderecoAtual.setCidade(novoEndereco.getCidade());
+        enderecoAtual.setNumero(novoEndereco.getNumero());
+        enderecoAtual.setUF(novoEndereco.getUF());
+
+        _er.save(enderecoAtual);
+    }
+
+    public void deletarEndereco(Endereco endereco) {
+        _er.delete(endereco);
+    }
 }
