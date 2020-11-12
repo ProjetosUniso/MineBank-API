@@ -37,5 +37,5 @@
    
 ## :information_source: Como acessar 
    * **Link API**: https://minebank-api-service.herokuapp.com/cliente
-   * **Postman Collection**: https://www.getpostman.com/collections/20572a4949ab73a6cf07
+   * **Postman Collection**: https://www.getpostman.com/collections/24f3842392eb5a8ca4a9
 
