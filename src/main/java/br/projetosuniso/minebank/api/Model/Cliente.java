@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -12,12 +13,16 @@ import java.util.Date;
 
 @Entity
 @Table(name = "Cliente")
-public class Cliente{
+public class Cliente {
 
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name = "increment", strategy = "increment")
     private Long id;
+
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "cliente")
+    private Conta conta;
 
     @NotNull
     private String nome;
@@ -31,6 +36,7 @@ public class Cliente{
     private String rg;
 
     @NotNull
+    @Email
     private String email;
 
     @DateTimeFormat

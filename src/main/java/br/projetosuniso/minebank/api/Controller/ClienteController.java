@@ -19,38 +19,8 @@ public class ClienteController {
 
     @Autowired
     private ClienteService _cs;
-    @Autowired
-    private EnderecoService _es;
 
-    @PostMapping
-    public ResponseEntity adicionar(@Valid @RequestBody Cliente cliente) {
-
-        try {
-            Endereco endereco = cliente.getEndereco();
-
-            _es.adicionarEndereco(endereco);
-            _cs.adicionarNovoCliente(cliente);
-
-            return new ResponseEntity(HttpStatus.OK);
-        }
-        catch (Exception e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @GetMapping
-    public ResponseEntity listar() {
-
-        List<Cliente> listaClientes = _cs.listarClientes();
-
-        if (!listaClientes.isEmpty())
-            return new ResponseEntity(listaClientes, HttpStatus.FOUND);
-        else
-            return new ResponseEntity("não existem clientes", HttpStatus.NOT_FOUND);
-
-    }
-
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity buscarPorId(@Valid @PathVariable(value = "id") Long id) {
 
         Optional<Cliente> cliente = _cs.obterPorId(id);
@@ -62,15 +32,11 @@ public class ClienteController {
 
     }
 
-    @GetMapping("/cpf/{cpf}")
-    public ResponseEntity buscarPorCpf(@Valid @PathVariable(value = "cpf") String cpf) {
-        Optional<Cliente> cliente = _cs.obterPorCpf(cpf);
+    @GetMapping("/cpfExiste/{cpf}")
+    public boolean buscarPorCpf(@Valid @PathVariable(value = "cpf") String cpf) {
+        Integer existeCpf =  _cs.verificaCpfExiste(cpf);
 
-        if(cliente.isPresent())
-            return new ResponseEntity(cliente.get(), HttpStatus.FOUND);
-        else
-            return new ResponseEntity("Cliente não encontrado", HttpStatus.NOT_FOUND);
-
+        return existeCpf != null;
     }
 
     @PutMapping("/{id}")
@@ -82,22 +48,6 @@ public class ClienteController {
             Cliente cliente = oldCliente.get();
 
             _cs.atualizarCliente(cliente, novoCliente);
-
-            return new ResponseEntity(HttpStatus.OK);
-        }
-
-        return new ResponseEntity("Cliente não encontrado", HttpStatus.NOT_FOUND);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity deletar(@Valid @PathVariable(value = "id") Long id) {
-        Optional<Cliente> cliente = _cs.obterPorId(id);
-
-        if (cliente.isPresent()) {
-            Endereco endereco = cliente.get().getEndereco();
-
-            _cs.deletarCliente(cliente.get());
-            _es.deletarEndereco(endereco);
 
             return new ResponseEntity(HttpStatus.OK);
         }

@@ -22,8 +22,8 @@ public class ClienteService {
         return _cr.findAll();
     }
 
-    public Optional<Cliente> obterPorCpf(String cpf) {
-        return _cr.findByCpf(cpf);
+    public Integer verificaCpfExiste(String cpf) {
+        return _cr.verifyCpfExists(cpf);
     }
 
     public Optional<Cliente> obterPorId(Long id) {
@@ -46,3 +46,4 @@ public class ClienteService {
     }
 
 }
+
