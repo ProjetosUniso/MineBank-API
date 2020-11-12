@@ -18,10 +18,6 @@ public class ClienteService {
         _cr.save(cliente);
     }
 
-    public List<Cliente> listarClientes() {
-        return _cr.findAll();
-    }
-
     public Integer verificaCpfExiste(String cpf) {
         return _cr.verifyCpfExists(cpf);
     }
