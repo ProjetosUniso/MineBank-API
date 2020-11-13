@@ -34,10 +34,10 @@ public class HistoricoMovimentacaoController {
     @GetMapping("/{id}")
     public ResponseEntity obterHistorico(@Valid @PathVariable(value = "id") Long id) {
 
-        Optional<HistoricoMovimentacao> movimentacao = _ms.obterMovimentacao(id);
+        List<HistoricoMovimentacao> list = _ms.obterMovimentacao(id);
 
-        if (movimentacao.isPresent())
-            return new ResponseEntity(movimentacao, HttpStatus.FOUND);
+        if (!list.isEmpty())
+            return new ResponseEntity(list, HttpStatus.FOUND);
         else
             return new ResponseEntity("não existem movimentações para essa conta", HttpStatus.NOT_FOUND);
 

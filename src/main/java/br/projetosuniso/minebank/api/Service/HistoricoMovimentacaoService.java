@@ -18,8 +18,8 @@ public class HistoricoMovimentacaoService {
         _hmr.save(movimentacao);
     }
 
-    public Optional<HistoricoMovimentacao> obterMovimentacao(Long id) {
-        return _hmr.findById(id);
+    public List<HistoricoMovimentacao> obterMovimentacao(Long id) {
+        return _hmr.findByIdConta(id);
     }
 
     public List<HistoricoMovimentacao> listarMovimentacoes() {
