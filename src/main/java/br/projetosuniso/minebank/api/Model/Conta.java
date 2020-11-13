@@ -29,6 +29,8 @@ public class Conta {
     private int agencia;
 
     @NotNull
+    @Min(100000)
+    @Max(999999)
     private Long senha;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
