@@ -35,16 +35,16 @@ public class Conta {
     @Max(999999)
     private Long senha;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "idCliente", referencedColumnName = "id")
+    @PositiveOrZero
+    private BigDecimal saldo;
+
+    @JsonIgnoreProperties
+    @OneToOne
+    @JoinColumn(name = "idCliente", unique = true)
     private Cliente cliente;
 
     @OneToMany(mappedBy = "conta")
     private Set<HistoricoMovimentacao> movimentacaos;
-
-    @PositiveOrZero
-    private BigDecimal saldo;
 
 
     public Conta() {

@@ -42,11 +42,10 @@ public class Cliente {
     @DateTimeFormat
     private Date dataNascimento;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "idEndereco", referencedColumnName = "id")
+    @JsonIgnoreProperties
+    @OneToOne
+    @JoinColumn(name = "idEndereco", unique = true)
     private Endereco endereco;
-
     public Cliente() {
 
     }

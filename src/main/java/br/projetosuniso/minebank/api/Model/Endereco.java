@@ -16,8 +16,7 @@ public class Endereco {
     @GenericGenerator(name = "increment", strategy = "increment")
     private Long id;
 
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "endereco")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "endereco")
     private Cliente cliente;
 
     @NotNull

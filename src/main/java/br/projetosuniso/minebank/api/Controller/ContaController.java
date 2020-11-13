@@ -37,11 +37,11 @@ public class ContaController {
             Cliente cliente = conta.getCliente();
             Endereco endereco = cliente.getEndereco();
 
+            conta.setSaldo(BigDecimal.valueOf(0));
+
             _enderecoservice.adicionarEndereco(endereco);
             _clientesservice.adicionarNovoCliente(cliente);
             _contaservice.adicionarConta(conta);
-
-            conta.setSaldo(BigDecimal.valueOf(0));
 
             return new ResponseEntity(HttpStatus.OK);
         }
@@ -109,9 +109,9 @@ public class ContaController {
             Cliente cliente = conta.get().getCliente();
             Endereco endereco = cliente.getEndereco();
 
+            _historicomovimentacaoservice.deletaMovimentacao(id);
             _enderecoservice.deletarEndereco(endereco);
             _clientesservice.deletarCliente(cliente);
-            _historicomovimentacaoservice.deletaMovimentacao(id);
             _contaservice.deletarConta(conta.get());
 
             return new ResponseEntity(HttpStatus.OK);
