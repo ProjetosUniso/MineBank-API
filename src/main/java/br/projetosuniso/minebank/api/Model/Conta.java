@@ -7,6 +7,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+import java.math.BigDecimal;
 import java.util.Set;
 
 @Entity
@@ -41,17 +43,22 @@ public class Conta {
     @OneToMany(mappedBy = "conta")
     private Set<HistoricoMovimentacao> movimentacaos;
 
+    @PositiveOrZero
+    private BigDecimal saldo;
+
+
     public Conta() {
 
     }
 
-    public Conta(Long id, Long numero, int agencia, Long senha, Cliente cliente) {
+    public Conta(Long id, Long numero, int agencia, Long senha, Cliente cliente, BigDecimal saldo) {
 
         setId(id);
         setNumero(numero);
         setAgencia(agencia);
         setSenha(senha);
         setCliente(cliente);
+        setSaldo(saldo);
     }
 
     public Cliente getCliente() {
@@ -90,8 +97,15 @@ public class Conta {
         this.id = id;
     }
 
-
     public Long getId() {
         return id;
+    }
+
+    public BigDecimal getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(BigDecimal saldo) {
+        this.saldo = saldo;
     }
 }

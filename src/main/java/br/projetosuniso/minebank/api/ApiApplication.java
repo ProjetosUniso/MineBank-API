@@ -30,13 +30,16 @@ public class ApiApplication implements CommandLineRunner {
                 add(new Movimentacao(2, "DEPOSITO", "Deposito"));
             }
             {
-                add(new Movimentacao(3, "TRANSFERENCIA", "Tranferência"));
+                add(new Movimentacao(3, "REALTRANSFE", "Realiaza tranferência"));
             }
             {
-                add(new Movimentacao(4, "RESGPOUPANCA", "Resgate poupança"));
+                add(new Movimentacao(4, "RECETRANSFE", "Recebe tranferência"));
             }
             {
-                add(new Movimentacao(5, "DEPPOUPANCA", "Deposito poupança"));
+                add(new Movimentacao(5, "RESGPOUPANCA", "Resgate poupança"));
+            }
+            {
+                add(new Movimentacao(6, "DEPPOUPANCA", "Deposito poupança"));
             }
         };
 

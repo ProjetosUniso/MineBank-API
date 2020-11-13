@@ -25,5 +25,13 @@ public class HistoricoMovimentacaoService {
     public List<HistoricoMovimentacao> listarMovimentacoes() {
         return _hmr.findAll();
     }
+
+    public void deletaMovimentacao(Long id) {
+        List<HistoricoMovimentacao> lista = obterMovimentacao(id);
+
+        for (HistoricoMovimentacao movimentacao : lista) {
+            _hmr.delete(movimentacao);
+        }
+    }
 }
 
