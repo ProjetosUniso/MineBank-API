@@ -119,4 +119,18 @@ public class ContaController {
 
         return new ResponseEntity("Conta não encontrada", HttpStatus.NOT_FOUND);
     }
+
+    @GetMapping("/login/{login}")
+    public boolean verificaLogin(@PathVariable(value = "login") String login) {
+
+        String[] loginParam = login.split("&");
+
+        String cpf = loginParam[0];
+        Long senha = Long.valueOf(loginParam[1]);
+
+        Integer existeConta = _contaservice.verificaContaExiste(cpf, senha);
+
+        return existeConta != null;
+
+    }
 }

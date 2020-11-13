@@ -42,4 +42,8 @@ public class ContaService {
     public void deletarConta(Conta conta) {
         _cr.delete(conta);
     }
+
+    public Integer verificaContaExiste(String cpf, Long senha) {
+        return _cr.verifyContaExists(cpf, senha);
+    }
 }
