@@ -2,7 +2,9 @@ package br.projetosuniso.minebank.api.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.Set;
 
 @Entity
 @Table(name = "Movimentacao")
@@ -14,6 +16,9 @@ public class Movimentacao {
     private String chave;
 
     private String descricao;
+
+    @OneToMany(mappedBy = "movimentacao")
+    private Set<HistoricoMovimentacao> movimentacaos;
 
     public Movimentacao() {
 

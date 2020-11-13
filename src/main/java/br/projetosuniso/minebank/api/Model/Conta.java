@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Entity
 @Table(name = "Conta")
@@ -28,14 +29,17 @@ public class Conta {
     private int agencia;
 
     @NotNull
-    @Min(100000)
-    @Max(999999)
+    @Min(1000)
+    @Max(9999)
     private Long senha;
 
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "idCliente", referencedColumnName = "id")
     private Cliente cliente;
+
+    @OneToMany(mappedBy = "conta")
+    private Set<HistoricoMovimentacao> movimentacaos;
 
     public Conta() {
 

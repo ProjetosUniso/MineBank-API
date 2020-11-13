@@ -24,19 +24,19 @@ public class ApiApplication implements CommandLineRunner {
 
         ArrayList<Movimentacao> list = new ArrayList<Movimentacao>() {
             {
-                add(new Movimentacao(1, "SAQUE", "Realiza o saque da conta"));
+                add(new Movimentacao(1, "SAQUE", "Saque"));
             }
             {
-                add(new Movimentacao(2, "DEPOSITO", "Realiza o deposito na conta"));
+                add(new Movimentacao(2, "DEPOSITO", "Deposito"));
             }
             {
-                add(new Movimentacao(3, "TRANSFERENCIA", "Realiza uma tranferência a outra conta"));
+                add(new Movimentacao(3, "TRANSFERENCIA", "Tranferência"));
             }
             {
-                add(new Movimentacao(4, "RESGPOUPANCA", "Realiza o resgate da poupança"));
+                add(new Movimentacao(4, "RESGPOUPANCA", "Resgate poupança"));
             }
             {
-                add(new Movimentacao(5, "DEPPOUPANCA", "Realiza o deposito na poupança"));
+                add(new Movimentacao(5, "DEPPOUPANCA", "Deposito poupança"));
             }
         };
 

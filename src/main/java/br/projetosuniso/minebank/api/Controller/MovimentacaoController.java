@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/movimentacao")
+@RequestMapping("/tiposMovimentacao")
 public class MovimentacaoController {
 
     @Autowired
@@ -26,7 +26,7 @@ public class MovimentacaoController {
         if (!listaMovimentacao.isEmpty())
             return new ResponseEntity(listaMovimentacao, HttpStatus.FOUND);
         else
-            return new ResponseEntity("não existem movimentações criadas", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("não existem tipos de movimentações criadas", HttpStatus.NOT_FOUND);
 
     }
 }
