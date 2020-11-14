@@ -4,6 +4,9 @@ import br.projetosuniso.minebank.api.Model.Cliente;
 import br.projetosuniso.minebank.api.Model.Endereco;
 import br.projetosuniso.minebank.api.Service.ClienteService;
 import br.projetosuniso.minebank.api.Service.EnderecoService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +23,12 @@ public class ClienteController {
     @Autowired
     private ClienteService _cs;
 
-    @GetMapping("/{id}")
+    @ApiOperation(value = "Retorna um cliente especifíco")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Retorna o cliente"),
+            @ApiResponse(code = 404, message = "Cliente não encontrado"),
+    })
+    @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity buscarPorId(@Valid @PathVariable(value = "id") Long id) {
 
         Optional<Cliente> cliente = _cs.obterPorId(id);
