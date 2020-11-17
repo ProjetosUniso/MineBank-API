@@ -36,6 +36,7 @@
    * **Heroku**
    
 ## :information_source: Como acessar 
-   * **Link API**: https://minebank-api-service.herokuapp.com/cliente
-   * **Postman Collection**: https://www.getpostman.com/collections/24f3842392eb5a8ca4a9
+   * **Link API**: https://minebank-api-service.herokuapp.com/
+   * **Postman Collection**: https://www.getpostman.com/collections/24f3842392eb5a8ca4a9]
+   * **Swagger**: https://minebank-api-service.herokuapp.com/swagger-ui.html
 
