@@ -33,7 +33,7 @@ public class ContaController {
     @Autowired
     private HistoricoMovimentacaoService _historicomovimentacaoservice;
 
-    @ApiOperation(value = "Adicionar uma nova conta")
+    @ApiOperation(value = "Adiciona uma nova conta")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Conta adicionada com sucesso"),
             @ApiResponse(code = 400, message = "dados para registro invalido"),
@@ -59,10 +59,10 @@ public class ContaController {
         }
     }
 
-    @ApiOperation(value = "Adicionar uma nova conta")
+    @ApiOperation(value = "Lista todas as conta")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Conta adicionada com sucesso"),
-            @ApiResponse(code = 400, message = "dados para registro invalido"),
+            @ApiResponse(code = 200, message = "Lista as contas"),
+            @ApiResponse(code = 400, message = "não existem contas regristradas"),
             @ApiResponse(code = 500, message = "Erro interno")
     })
     @GetMapping
