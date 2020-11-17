@@ -7,6 +7,9 @@ import br.projetosuniso.minebank.api.Service.ClienteService;
 import br.projetosuniso.minebank.api.Service.ContaService;
 import br.projetosuniso.minebank.api.Service.EnderecoService;
 import br.projetosuniso.minebank.api.Service.HistoricoMovimentacaoService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,8 +33,14 @@ public class ContaController {
     @Autowired
     private HistoricoMovimentacaoService _historicomovimentacaoservice;
 
+    @ApiOperation(value = "Adicionar uma nova conta")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Conta adicionada com sucesso"),
+            @ApiResponse(code = 400, message = "dados para registro invalido"),
+            @ApiResponse(code = 500, message = "Erro interno")
+    })
     @PostMapping
-    public ResponseEntity adicionar(@Valid @RequestBody Conta conta) {
+    public ResponseEntity<String> adicionar(@Valid @RequestBody Conta conta) {
 
         try {
             Cliente cliente = conta.getCliente();
@@ -43,50 +52,70 @@ public class ContaController {
             _clientesservice.adicionarNovoCliente(cliente);
             _contaservice.adicionarConta(conta);
 
-            return new ResponseEntity(HttpStatus.OK);
+            return ResponseEntity.ok().build();
         }
         catch (Exception e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
+    @ApiOperation(value = "Adicionar uma nova conta")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Conta adicionada com sucesso"),
+            @ApiResponse(code = 400, message = "dados para registro invalido"),
+            @ApiResponse(code = 500, message = "Erro interno")
+    })
     @GetMapping
     public ResponseEntity listar() {
 
         List<Conta> listaContas = _contaservice.listarContas();
 
         if (!listaContas.isEmpty())
-            return new ResponseEntity(listaContas, HttpStatus.FOUND);
+            return ResponseEntity.ok(listaContas);
         else
-            return new ResponseEntity("não existem contas criadas", HttpStatus.NOT_FOUND);
+            return ResponseEntity.badRequest().build();
 
     }
 
+    @ApiOperation(value = "Retorna uma conta especifíca, baseada no id")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Retorna a conta"),
+            @ApiResponse(code = 400, message = "Conta não encontrada"),
+            @ApiResponse(code = 500, message = "Erro interno")
+    })
     @GetMapping("/id/{id}")
-    public ResponseEntity buscarPorId(@Valid @PathVariable(value = "id") Long id) {
+    public ResponseEntity<Conta> buscarPorId(@Valid @PathVariable(value = "id") Long id) {
 
         Optional<Conta> conta = _contaservice.obterPorId(id);
 
-        if(conta.isPresent())
-            return new ResponseEntity(conta.get(), HttpStatus.FOUND);
-        else
-            return new ResponseEntity("Conta não encontrada", HttpStatus.NOT_FOUND);
-
+        return conta
+                .map(value -> ResponseEntity.ok().body(value))
+                .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
+    @ApiOperation(value = "Retorna uma conta especifíca, baseada no cpf")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Retorna a conta"),
+            @ApiResponse(code = 400, message = "Conta não encontrada"),
+            @ApiResponse(code = 500, message = "Erro interno")
+    })
     @GetMapping("/cpf/{cpf}")
-    public ResponseEntity buscarPorCpf(@Valid @PathVariable(value = "cpf") String cpf) {
+    public ResponseEntity<Conta> buscarPorCpf(@Valid @PathVariable(value = "cpf") String cpf) {
         Optional<Conta> conta = _contaservice.obterPorCpf(cpf);
 
-        if(conta.isPresent())
-            return new ResponseEntity(conta.get(), HttpStatus.FOUND);
-        else
-            return new ResponseEntity("Conta não encontrada", HttpStatus.NOT_FOUND);
-
+        return conta
+                .map(value -> ResponseEntity.ok().body(value))
+                .orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
+    @ApiOperation(value = "Atualiza uma conta especifíca")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Conta atualizado com sucesso"),
+            @ApiResponse(code = 400, message = "Conta não encontrado"),
+            @ApiResponse(code = 500, message = "Erro interno")
+    })
     @PutMapping("/{id}")
-    public ResponseEntity atualizar(@Valid @PathVariable(value = "id") Long id, @Valid @RequestBody Conta novaConta) {
+    public ResponseEntity<String> atualizar(@Valid @PathVariable(value = "id") Long id, @Valid @RequestBody Conta novaConta) {
 
         Optional<Conta> oldConta = _contaservice.obterPorId(id);
 
@@ -95,14 +124,20 @@ public class ContaController {
 
             _contaservice.atualizarConta(conta, novaConta);
 
-            return new ResponseEntity(HttpStatus.OK);
+            return ResponseEntity.ok().build();
         }
 
-        return new ResponseEntity("Conta não encontrada", HttpStatus.NOT_FOUND);
+        return ResponseEntity.badRequest().body("Conta não encontrado");
     }
 
+    @ApiOperation(value = "Deleta uma conta especifíca")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Conta deletada com sucesso"),
+            @ApiResponse(code = 400, message = "Conta não encontrado"),
+            @ApiResponse(code = 500, message = "Erro interno")
+    })
     @DeleteMapping("/{id}")
-    public ResponseEntity deletar(@Valid @PathVariable(value = "id") Long id) {
+    public ResponseEntity<String> deletar(@Valid @PathVariable(value = "id") Long id) {
         Optional<Conta> conta = _contaservice.obterPorId(id);
 
         if (conta.isPresent()) {
@@ -110,18 +145,25 @@ public class ContaController {
             Endereco endereco = cliente.getEndereco();
 
             _historicomovimentacaoservice.deletaMovimentacao(id);
+
             _enderecoservice.deletarEndereco(endereco);
             _clientesservice.deletarCliente(cliente);
             _contaservice.deletarConta(conta.get());
 
-            return new ResponseEntity(HttpStatus.OK);
+
+            return ResponseEntity.ok().build();
         }
 
-        return new ResponseEntity("Conta não encontrada", HttpStatus.NOT_FOUND);
+        return ResponseEntity.badRequest().body("Conta não encontrado");
     }
 
-    @GetMapping("/login/{login}")
-    public boolean verificaLogin(@PathVariable(value = "login") String login) {
+    @ApiOperation(value = "Verifica se uma conta já foi cadastrada")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Retorna true ou false, para caso o conta exista"),
+            @ApiResponse(code = 500, message = "Erro interno")
+    })
+    @GetMapping("/login/{cpf&senha}")
+    public boolean verificaLogin(@PathVariable(value = "cpf&senha") String login) {
 
         String[] loginParam = login.split("&");
 

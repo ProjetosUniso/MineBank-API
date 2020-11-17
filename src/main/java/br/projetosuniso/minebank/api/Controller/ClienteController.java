@@ -26,20 +26,25 @@ public class ClienteController {
     @ApiOperation(value = "Retorna um cliente especifíco")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Retorna o cliente"),
-            @ApiResponse(code = 404, message = "Cliente não encontrado"),
+            @ApiResponse(code = 400, message = "Cliente não encontrado"),
+            @ApiResponse(code = 500, message = "Erro interno")
     })
     @GetMapping(value = "/{id}", produces = "application/json")
-    public ResponseEntity buscarPorId(@Valid @PathVariable(value = "id") Long id) {
+    public ResponseEntity<Cliente> buscarPorId(@Valid @PathVariable(value = "id") Long id) {
 
         Optional<Cliente> cliente = _cs.obterPorId(id);
 
-        if(cliente.isPresent())
-            return new ResponseEntity(cliente.get(), HttpStatus.FOUND);
-        else
-            return new ResponseEntity("Cliente não encontrado", HttpStatus.NOT_FOUND);
+        return cliente
+                .map(value -> ResponseEntity.ok().body(value))
+                .orElseGet(() -> ResponseEntity.badRequest().build());
 
     }
 
+    @ApiOperation(value = "Verifica se o cpf já foi cadastrado")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Retorna true ou false, para caso o cpf exista"),
+            @ApiResponse(code = 500, message = "Erro interno")
+    })
     @GetMapping("/cpfExiste/{cpf}")
     public boolean buscarPorCpf(@Valid @PathVariable(value = "cpf") String cpf) {
         Integer existeCpf =  _cs.verificaCpfExiste(cpf);
@@ -47,8 +52,14 @@ public class ClienteController {
         return existeCpf != null;
     }
 
+    @ApiOperation(value = "Atualiza um cliente especifíco")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Cliente atualizado com sucesso"),
+            @ApiResponse(code = 400, message = "Cliente não encontrado"),
+            @ApiResponse(code = 500, message = "Erro interno")
+    })
     @PutMapping("/{id}")
-    public ResponseEntity atualizar(@Valid @PathVariable(value = "id") Long id, @Valid @RequestBody Cliente novoCliente) {
+    public ResponseEntity<String> atualizar(@Valid @PathVariable(value = "id") Long id, @Valid @RequestBody Cliente novoCliente) {
 
         Optional<Cliente> oldCliente = _cs.obterPorId(id);
 
@@ -57,10 +68,9 @@ public class ClienteController {
 
             _cs.atualizarCliente(cliente, novoCliente);
 
-            return new ResponseEntity(HttpStatus.OK);
+            return ResponseEntity.ok().build();
         }
 
-        return new ResponseEntity("Cliente não encontrado", HttpStatus.NOT_FOUND);
+        return ResponseEntity.badRequest().body("Cliente não encontrado");
     }
-
 }
