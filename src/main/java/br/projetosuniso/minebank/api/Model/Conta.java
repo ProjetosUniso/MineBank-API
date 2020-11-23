@@ -38,6 +38,9 @@ public class Conta {
     @PositiveOrZero
     private BigDecimal saldo;
 
+    @PositiveOrZero
+    private BigDecimal poupanca;
+
     @JsonIgnoreProperties
     @OneToOne
     @JoinColumn(name = "idCliente", unique = true)
@@ -51,7 +54,7 @@ public class Conta {
 
     }
 
-    public Conta(Long id, Long numero, int agencia, Long senha, Cliente cliente, BigDecimal saldo) {
+    public Conta(Long id, Long numero, int agencia, Long senha, Cliente cliente, BigDecimal saldo, BigDecimal poupanca) {
 
         setId(id);
         setNumero(numero);
@@ -59,6 +62,7 @@ public class Conta {
         setSenha(senha);
         setCliente(cliente);
         setSaldo(saldo);
+        setPoupanca(poupanca);
     }
 
     public Cliente getCliente() {
@@ -107,5 +111,13 @@ public class Conta {
 
     public void setSaldo(BigDecimal saldo) {
         this.saldo = saldo;
+    }
+
+    public BigDecimal getPoupanca() {
+        return poupanca;
+    }
+
+    public void setPoupanca(BigDecimal poupanca) {
+        this.poupanca = poupanca;
     }
 }

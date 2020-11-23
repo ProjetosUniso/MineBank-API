@@ -28,6 +28,9 @@ public class Cliente {
     private String nome;
 
     @NotNull
+    private String sobrenome;
+
+    @NotNull
     @Size(min = 11, max = 11)
     private String cpf;
 
@@ -50,9 +53,10 @@ public class Cliente {
 
     }
 
-    public Cliente(Long id, String nome, String cpf, String rg, String email, Date dataNascimento, Endereco endereco) {
+    public Cliente(Long id, String nome, String sobrenome, String cpf, String rg, String email, Date dataNascimento, Endereco endereco) {
         setId(id);
         setNome(nome);
+        setSobrenome(sobrenome);
         setCpf(cpf);
         setRg(rg);
         setEmail(email);
@@ -115,6 +119,15 @@ public class Cliente {
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
+
+    public String getSobrenome() {
+        return sobrenome;
+    }
+
+    public void setSobrenome(String sobrenome) {
+        this.sobrenome = sobrenome;
+    }
+
 
 }
 
