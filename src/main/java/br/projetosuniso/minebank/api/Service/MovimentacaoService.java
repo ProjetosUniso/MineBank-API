@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MovimentacaoService {
@@ -19,5 +20,9 @@ public class MovimentacaoService {
 
     public List<Movimentacao> listar() {
         return _mr.findAll();
+    }
+
+    public Optional<Movimentacao> obterMovimentacao(String chave) {
+        return _mr.findByChave(chave);
     }
 }
