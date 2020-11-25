@@ -5,6 +5,7 @@ import br.projetosuniso.minebank.api.Repository.ContaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,5 +46,15 @@ public class ContaService {
 
     public Integer verificaContaExiste(String cpf, Long senha) {
         return _cr.verifyContaExists(cpf, senha);
+    }
+
+    public void atualizarSaldo(Conta conta, BigDecimal saldo) {
+        conta.setSaldo(saldo);
+        _cr.save(conta);
+    }
+
+    public void atualizarPoupanca(Conta conta, BigDecimal poupanca) {
+        conta.setPoupanca(poupanca);
+        _cr.save(conta);
     }
 }

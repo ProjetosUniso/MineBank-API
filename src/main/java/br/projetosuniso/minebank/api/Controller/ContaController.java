@@ -175,4 +175,54 @@ public class ContaController {
         return existeConta != null;
 
     }
+
+    @ApiOperation(value = "Atualiza o saldo da conta")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Saldo atualizado"),
+            @ApiResponse(code = 500, message = "Erro interno")
+    })
+    @PutMapping("/saldo/{id&value}")
+    public ResponseEntity<String> atualizaSaldo(@PathVariable(value = "id&value") String param) {
+
+        String[] dados = param.split("&");
+
+        Long id = Long.parseLong(dados[0]);
+        BigDecimal valor = BigDecimal.valueOf(Long.parseLong(dados[1]));
+
+        Optional<Conta> conta = _contaservice.obterPorId(id);
+
+        if (conta.isPresent()) {
+            _contaservice.atualizarSaldo(conta.get(), valor);
+
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.badRequest().body("Conta não encontrado");
+
+    }
+
+    @ApiOperation(value = "Atualiza o valor da poupança da conta")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Poupança atualizado"),
+            @ApiResponse(code = 500, message = "Erro interno")
+    })
+    @PutMapping("/poupanca/{id&value}")
+    public ResponseEntity<String> atualizaPoupanca(@PathVariable(value = "id&value") String param) {
+
+        String[] dados = param.split("&");
+
+        Long id = Long.parseLong(dados[0]);
+        BigDecimal valor = BigDecimal.valueOf(Long.parseLong(dados[1]));
+
+        Optional<Conta> conta = _contaservice.obterPorId(id);
+
+        if (conta.isPresent()) {
+            _contaservice.atualizarPoupanca(conta.get(), valor);
+
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.badRequest().body("Conta não encontrado");
+
+    }
 }
