@@ -22,6 +22,10 @@ public class ClienteService {
         return _cr.verifyCpfExists(cpf);
     }
 
+    public Integer verificaEmailExiste(String email) {
+        return _cr.verifyEmailExists(email);
+    }
+
     public Optional<Cliente> obterPorId(Long id) {
         return _cr.findById(id);
     }

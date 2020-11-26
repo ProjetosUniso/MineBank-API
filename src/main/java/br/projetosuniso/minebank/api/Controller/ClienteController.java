@@ -52,6 +52,18 @@ public class ClienteController {
         return existeCpf != null;
     }
 
+    @ApiOperation(value = "Verifica se um email já foi cadastrado")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Retorna true ou false, para caso o email exista"),
+            @ApiResponse(code = 500, message = "Erro interno")
+    })
+    @GetMapping("/emailExiste/{email}")
+    public boolean buscarPorEmail(@Valid @PathVariable(value = "email") String email) {
+        Integer existeEmail =  _cs.verificaEmailExiste(email);
+
+        return existeEmail != null;
+    }
+
     @ApiOperation(value = "Atualiza um cliente especifíco")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Cliente atualizado com sucesso"),

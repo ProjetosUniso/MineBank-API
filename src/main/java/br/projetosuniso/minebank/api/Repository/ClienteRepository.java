@@ -11,8 +11,12 @@ import java.util.Optional;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
-    /*Metodo da interface que faz o select no banco retornando um tipo de Cliente*/
+    /*Metodo que verifica se um cpf já foi cadastrado na base*/
     @Query(value = "select 1 from Cliente c where c.cpf = :cpf order by c.id")
     Integer verifyCpfExists(@Param("cpf") String cpf);
+
+    /*Metodo que verifica se um email já foi cadastrado na base*/
+    @Query(value = "select 1 from Cliente c where c.email = :email order by c.id")
+    Integer verifyEmailExists(@Param("email") String email);
 }
 
