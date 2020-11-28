@@ -36,10 +36,10 @@ public class Conta {
     private Long senha;
 
     @PositiveOrZero
-    private BigDecimal saldo;
+    private Long saldo;
 
     @PositiveOrZero
-    private BigDecimal poupanca;
+    private Long poupanca;
 
     @JsonIgnoreProperties
     @OneToOne
@@ -54,7 +54,7 @@ public class Conta {
 
     }
 
-    public Conta(Long id, Long numero, int agencia, Long senha, Cliente cliente, BigDecimal saldo, BigDecimal poupanca) {
+    public Conta(Long id, Long numero, int agencia, Long senha, Cliente cliente, Long saldo, Long poupanca) {
 
         setId(id);
         setNumero(numero);
@@ -105,19 +105,19 @@ public class Conta {
         return id;
     }
 
-    public BigDecimal getSaldo() {
+    public Long getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(BigDecimal saldo) {
+    public void setSaldo(Long saldo) {
         this.saldo = saldo;
     }
 
-    public BigDecimal getPoupanca() {
+    public Long getPoupanca() {
         return poupanca;
     }
 
-    public void setPoupanca(BigDecimal poupanca) {
+    public void setPoupanca(Long poupanca) {
         this.poupanca = poupanca;
     }
 }

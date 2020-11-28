@@ -46,7 +46,8 @@ public class ContaController {
             Cliente cliente = conta.getCliente();
             Endereco endereco = cliente.getEndereco();
 
-            conta.setSaldo(BigDecimal.valueOf(0));
+            conta.setSaldo((long) 0);
+            conta.setPoupanca((long) 0);
 
             _enderecoservice.adicionarEndereco(endereco);
             _clientesservice.adicionarNovoCliente(cliente);
@@ -187,7 +188,7 @@ public class ContaController {
         String[] dados = param.split("&");
 
         Long id = Long.parseLong(dados[0]);
-        BigDecimal valor = BigDecimal.valueOf(Long.parseLong(dados[1]));
+        Long valor = Long.parseLong(dados[1]);
 
         Optional<Conta> conta = _contaservice.obterPorId(id);
 
@@ -212,7 +213,7 @@ public class ContaController {
         String[] dados = param.split("&");
 
         Long id = Long.parseLong(dados[0]);
-        BigDecimal valor = BigDecimal.valueOf(Long.parseLong(dados[1]));
+        Long valor = Long.parseLong(dados[1]);
 
         Optional<Conta> conta = _contaservice.obterPorId(id);
 

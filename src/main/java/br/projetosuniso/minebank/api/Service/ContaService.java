@@ -48,12 +48,12 @@ public class ContaService {
         return _cr.verifyContaExists(cpf, senha);
     }
 
-    public void atualizarSaldo(Conta conta, BigDecimal saldo) {
+    public void atualizarSaldo(Conta conta, Long saldo) {
         conta.setSaldo(saldo);
         _cr.save(conta);
     }
 
-    public void atualizarPoupanca(Conta conta, BigDecimal poupanca) {
+    public void atualizarPoupanca(Conta conta, Long poupanca) {
         conta.setPoupanca(poupanca);
         _cr.save(conta);
     }

@@ -16,6 +16,12 @@ public class ApiApplication implements CommandLineRunner {
         SpringApplication.run(ApiApplication.class, args);
     }
 
+    /*
+    PROFESSOR INFO:
+    Essa API foi feita para ser consumida pela aplicação mobile do MineBank
+    sua documentação se encontra no link : https://minebank-api-service.herokuapp.com/swagger-ui.html
+     */
+
     @Autowired
     private MovimentacaoService _ms;
 
@@ -40,6 +46,9 @@ public class ApiApplication implements CommandLineRunner {
             }
             {
                 add(new Movimentacao(6, "DEPPOUPANCA", "Deposito poupança"));
+            }
+            {
+                add(new Movimentacao(7, "PAGBOLETO", "Pagamento em boleto"));
             }
         };
 
